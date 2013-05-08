@@ -2,18 +2,15 @@ package App;
 import java.awt.Canvas;
 import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 
-public class Ventana extends Canvas implements MouseListener{//es la ventana principal
-	private Proyectil p;
-	private Interfaz interfaz;
-	
+public class Ventana extends Canvas{
+	private Grafico a;
+	private Proyectil c;
 	private Frame ventana;
 	private int resolucionX = 800;
 	private int resolucionY = 600;
@@ -42,9 +39,6 @@ public class Ventana extends Canvas implements MouseListener{//es la ventana pri
 		});
 		
 		initGraficos();
-		initInterfaz();
-		
-		this.addMouseListener(this);
 		
 		gameLoop();
 	}
@@ -64,60 +58,25 @@ public class Ventana extends Canvas implements MouseListener{//es la ventana pri
 	}
 	
 	public void updateFisicas(){
-		
-	}
-	
-	public void initInterfaz(){
-		interfaz = new Interfaz(this, 0, 0, "/Img/startButton.png");
-	}
-	
-	public void dibujarInterfaz(Graphics grafico){
-		interfaz.dibujarGrafico(grafico);
+			c.moverObj();
 	}
 	
 	public void initGraficos(){
-		p = new Proyectil(this, 0, 0, "/Projectile/Rocket1.png");
-
+		a = new Grafico(this, getWidth()/2, getHeight()/2, "back.jpg");
+		c = new Proyectil(this, 0, 0, "square.jpg");
+		
 	}
 	
 	public void dibujarGraficos(Graphics grafico){
-		p.dibujarGrafico(grafico);
+		a.dibujarGrafico(grafico);
+		c.dibujarGrafico(grafico);
+		
+
 	}
 	
 	public void dibujarPantalla(Graphics grafico){
 		BufferedImage pantalla = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB);
 		dibujarGraficos(pantalla.getGraphics());
-		dibujarInterfaz(pantalla.getGraphics());
 		grafico.drawImage(pantalla, 0, 0, this);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		interfaz.mover(e.getX(), e.getY());		
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

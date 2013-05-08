@@ -8,26 +8,30 @@ import java.awt.image.ImageObserver;
 import javax.swing.ImageIcon;
 
 public class Grafico implements ImageObserver{
-	protected int posicionX;
-	protected int posicionY;
+	
+	private final String rutaImg = "/Img/";
+	
+	protected double posicionX;
+	protected double posicionY;
 	protected double velocidadX;
 	protected double velocidadY;
 	protected boolean visible;
 	protected ImageIcon icon;
 	protected Ventana ventana;
 	protected double angulo; //Angulo actual
-	protected int rotacion; //Velocidad de rotación
-	protected int alto;
-	protected int ancho; 
-	protected int radioColision; 
+	protected double rotacion; //Velocidad de rotación
+	protected double alto;
+	protected double ancho; 
+	protected double radioColision; 
+	
 	 
-	public Grafico(Ventana ventana, int posicionX, int posicionY, String sprite) {
+	public Grafico(Ventana ventana, double posicionX, double posicionY, String nombreImagen) {
 		super();
-		this.icon = new ImageIcon(getClass().getResource(sprite));
+		this.icon = new ImageIcon(getClass().getResource(rutaImg + nombreImagen));
 		this.alto = icon.getIconHeight();
 		this.ancho = icon.getIconWidth();
-		this.posicionX = posicionX + ancho/2;
-		this.posicionY = posicionY + alto/2;
+		this.posicionX = posicionX - ancho/2;
+		this.posicionY = posicionY - alto/2;
 		this.velocidadX = 0;
 		this.velocidadY = 0;
 		this.visible = true;
@@ -40,17 +44,21 @@ public class Grafico implements ImageObserver{
 	public void dibujarGrafico(Graphics grafico){
 		if(visible){			
 			Graphics2D g2d = (Graphics2D) grafico;
-			AffineTransform tx = AffineTransform.getRotateInstance(angulo, ancho/2, alto/2);
-			tx.translate((posicionX ), (posicionY));
+			AffineTransform tx = AffineTransform.getTranslateInstance(posicionX, posicionY);
+			tx.rotate(angulo, ancho/2, alto/2);
+			tx.translate(0, 0);
 	        g2d.drawImage(icon.getImage(), tx, this);
+	        
 		}
 	}
 	
+	/*
 	public void moverGrafico(double tiempo){
 		posicionX += velocidadX * tiempo;
 		posicionY += velocidadY * tiempo;
 		angulo += rotacion * tiempo;
 	}
+	*/
 
 	@Override
 	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
@@ -61,19 +69,19 @@ public class Grafico implements ImageObserver{
 		return visible;
 	}
 	
-	public int getPosicionX() {
+	public double getPosicionX() {
 		return posicionX;
 	}
 
-	public void setPosicionX(int posicionX) {
+	public void setPosicionX(double posicionX) {
 		this.posicionX = posicionX;
 	}
 
-	public int getPosicionY() {
+	public double getPosicionY() {
 		return posicionY;
 	}
 
-	public void setPosicionY(int posicionY) {
+	public void setPosicionY(double posicionY) {
 		this.posicionY = posicionY;
 	}
 
@@ -117,7 +125,7 @@ public class Grafico implements ImageObserver{
 		this.angulo = angulo;
 	}
 
-	public int getRotacion() {
+	public double getRotacion() {
 		return rotacion;
 	}
 
@@ -125,27 +133,27 @@ public class Grafico implements ImageObserver{
 		this.rotacion = rotacion;
 	}
 
-	public int getAlto() {
+	public double getAlto() {
 		return alto;
 	}
 
-	public void setAlto(int alto) {
+	public void setAlto(double alto) {
 		this.alto = alto;
 	}
 
-	public int getAncho() {
+	public double getAncho() {
 		return ancho;
 	}
 
-	public void setAncho(int ancho) {
+	public void setAncho(double ancho) {
 		this.ancho = ancho;
 	}
 
-	public int getRadioColision() {
+	public double getRadioColision() {
 		return radioColision;
 	}
 
-	public void setRadioColision(int radioColision) {
+	public void setRadioColision(double radioColision) {
 		this.radioColision = radioColision;
 	}
 

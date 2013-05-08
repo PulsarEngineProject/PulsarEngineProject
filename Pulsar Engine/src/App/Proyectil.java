@@ -1,39 +1,24 @@
 package App;
 
 public class Proyectil extends Grafico{
-	protected int origenX;
-	protected int origenY;
-	protected int destinoX;
-	protected int destinoY;
+	protected double origenX;
+	protected double origenY;
+	protected double destinoX;
+	protected double destinoY;
 	//protected Arma arma;
 
-	public Proyectil(Ventana ventana, int posicionX, int posicionY, String sprite) {
-		super(ventana, posicionX, posicionY, sprite);
-		//this.origenX = posicionX; //posarma
-		//this.origenY = posicionY; //posarma
-		//this.destinoX = destinoX; //objetivo
-		//this.destinoY = destinoY; //objetivo
-		//como obtengo el origen del arma y objetivo de esta
-
-		//test
-
-		this.origenX = posicionX; //posarma
-		this.origenY = posicionY; //posarma
-		this.destinoX = 800; //objetivo
-		this.destinoY = 600; //objetivo
+	public Proyectil(Ventana ventana, double posicionX, double posicionY, String nombreImagen) {
+		super(ventana, posicionX, posicionY, nombreImagen);
 		
-		float a = + origenY - destinoY;
-		float b = + origenX - destinoX;
-		float ab = a/b;
-	
-		this.angulo = Math.atan(ab)+Math.PI/2;
-		//this.setPosicionX(400);
-		//this.setPosicionY(400);
-
-		this.velocidadX = 0;
-		this.velocidadY = 0;
+		this.origenX = this.posicionX; //posarma
+		this.origenY = this.posicionY; //posarma
+		this.destinoX = 800 - ancho/2; //objetivo
+		this.destinoY = 600 - alto/2; //objetivo
 		
-		//test
+		//this.angulo = calcularAngulo();
+		
+		this.velocidadY = 1;
+		this.velocidadX = (this.posicionX - this.destinoX) / (this.posicionY - this.destinoY);
 	}
 
 	public boolean hasArrived(){
@@ -44,13 +29,25 @@ public class Proyectil extends Grafico{
 		}
 	}
 
-	public int calcularAngulo(){
-		return 0;
+	public double calcularAngulo(){
+		double a = + origenY - destinoY;
+		double b = + origenX - destinoX;
+		double ab = a/b;
+		return Math.atan(ab)+Math.PI/2;
 	}
 	
 	public void destruirObj(){
 		if(hasArrived()){
 			//impactado
 		}
+	}
+	
+	public void moverObj(){
+		System.out.println(posicionX+ancho/2);
+		System.out.println(posicionY+alto/2);
+		System.out.println("-----------");
+		posicionX += velocidadX;
+		posicionY += velocidadY;
+		
 	}
 }
